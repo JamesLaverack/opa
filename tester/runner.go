@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/logrusorgru/aurora"
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/open-policy-agent/opa/loader"
 	"github.com/open-policy-agent/opa/rego"
@@ -79,12 +80,12 @@ func (r *Result) String() string {
 
 func (r *Result) outcome() string {
 	if r.Pass() {
-		return "PASS"
+		return fmt.Sprint(aurora.Green("PASS"))
 	}
 	if r.Fail {
-		return "FAIL"
+		return fmt.Sprint(aurora.Red("FAIL"))
 	}
-	return "ERROR"
+	return fmt.Sprint(aurora.Red("ERROR"))
 }
 
 // Runner implements simple test discovery and execution.

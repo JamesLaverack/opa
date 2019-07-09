@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"github.com/logrusorgru/aurora"
 
 	"github.com/open-policy-agent/opa/topdown"
 
@@ -104,6 +105,12 @@ func (r PrettyReporter) Report(ch chan *Result) error {
 
 	if errs != 0 {
 		fmt.Fprintln(r.Output, "ERROR:", fmt.Sprintf("%d/%d", errs, total))
+	}
+
+	if (errs == 0 && fail == 0) {
+		fmt.Fprintln(r.Output, aurora.Green("All tests pass! :)"))
+	} else {
+		fmt.Fprintln(r.Output, aurora.Red("Not all tests passed. :("))
 	}
 
 	return nil
